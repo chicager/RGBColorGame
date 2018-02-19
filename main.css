@@ -1,0 +1,101 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    background: #232323;   
+    color: white;
+    text-transform: uppercase;
+    font-size: 14px;
+    font-family: sans-serif;
+    letter-spacing: 4px;
+    text-align: center;
+    clear:both;
+}
+
+.header{   
+    background: steelblue;  
+    padding: 2% 0;   
+}
+
+h1{
+    font-weight: 100;
+    line-height: 1.2; 
+}
+
+h1 span{
+    font-size: 180%;
+    font-weight: 400;
+}
+
+.stripe{
+    background: white;
+}
+
+.button-container{
+    display: inline-block;
+    margin: 0 auto;
+    width: 65%;
+    font-size: inherit;   
+    max-width: 580px;
+}
+
+button{
+    color: steelblue;
+    outline: none;
+    border: none;
+    background: white;
+    font-weight: 900;  
+    height: 100%;
+    text-transform: uppercase;
+    padding: 0.5% 1.5%;   
+    transition: all 0.3s; 
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    
+}
+
+#btnPlayAgain{
+    float: left;
+}
+
+#btnHard{
+    float: right;
+}
+
+#btnEasy{
+    float: right;
+}
+
+#gameResult{
+    display: inline-block;
+    color:red;
+    font-weight: 900;   
+    padding: 0.5% 0;  
+}
+
+.selected{
+    color: white;
+    background: steelblue;
+}
+
+button:hover{
+    color: white;
+    background: steelblue;
+}
+
+.square{
+    width: 30%;
+    margin: 1.66%;
+    padding-bottom: 30%;
+    float: left;
+    border-radius: 15%;
+}
+
+.container{
+    max-width: 600px;
+    margin: 2% auto;
+    clear:both;
+}
