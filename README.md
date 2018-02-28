@@ -1,2 +1,2 @@
 # RGBColorGame
-Guess the color
+Guess the color with the RGB hint
