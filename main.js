@@ -2,8 +2,14 @@ const bgColor = "#232323";
 const h1Label = document.querySelector("h1 span");
 const btnEasy = document.querySelector("#btnEasy");
 const btnHard = document.querySelector("#btnHard");
+const gameResult = document.querySelector("#gameResult");
+const btnPlayAgain = document.querySelector("#btnPlayAgain");
 
-let playedSquares = 6;
+const difficulty = new Map()
+    .set('easy', 3)
+    .set('hard', 6);
+
+let playedSquares = difficulty.get('hard');
 
 
 let setGameMode = (firstBtn, secondBtn) => {
@@ -23,63 +29,109 @@ let generateColors = () => {
                 ${Math.floor(Math.random() * 256)})`;
 }
 
-// let generateSquares = playedSquares =>{
-//     let container = document.querySelector(".container");
+let generateSquares = playedSquares => {
+    let container = document.querySelector(".container");
 
-//     for (let i = 0; i < playedSquares; i++) {
-//         let square = document.createElement("div");
-//         square.style.background = "yellow";
-//         container.appendChild(square);       
-//     }    
-// }
+    for (let i = 0; i < playedSquares; i++) {
+        let square = document.createElement("div");
+        square.classList.add("square");
+        container.appendChild(square);
+    }
+}
+
+let removeSquares = () => {
+    let container = document.querySelector(".container");
+    let squares = document.querySelectorAll(".square");
+
+    if (squares.length !== 0) {
+        for (let i = 0; i < squares.length; i++) {
+            container.removeChild(container.childNodes[0]);
+        }
+    }
+    
+}
+
+let setLabels = (text, color) => {
+
+    gameResult.innerText = text;
+    gameResult.style.color = color
+    gameResult.style.visibility = "visible";
+    btnPlayAgain.innerText = "play again";
+}
 
 let init = () => {
 
+    removeSquares();
+
+    generateSquares(playedSquares);
+
     let colors = [];
     let squares = document.querySelectorAll(".square");
-    let pickedColor = "";
+    let pickedColor = 0;
 
-    for (let i = 0; i < squares.length; i++) {
-        squares[i].style.background = bgColor;
-
-        squares[i].removeEventListener('click', event => {
-            if (event.target.style.background ===
-                squares[pickedColor].style.background) {
-                console.log("cool");
-            } else {
-                event.target.style.background = bgColor;
-            }
-        });
-    }
+    gameResult.style.visibility = "hidden";
+    btnPlayAgain.innerText = "new colors";
 
     pickedColor = Math.floor(Math.random() * playedSquares);
+    console.log(`Answer:  ${pickedColor + 1}`);
 
-    console.log(pickedColor);
-    for (let i = 0; i < playedSquares; i++) {
+    for (let i = 0; i < squares.length; i++) {
         colors.push(generateColors());
         squares[i].style.background = colors[i];
-        squares[i].addEventListener('click', event => {
-            if (event.target.style.background ===
-                squares[pickedColor].style.background) {
-                console.log("cool");
-            } else {
-                event.target.style.background = bgColor;
-            }
-        });
     }
+
+    let restSquares = squares.length;
+
+    let checkSquare = event => {
+        if (event.target.style.background ===
+            squares[pickedColor].style.background) {
+            squares.forEach(square => {
+                square.removeEventListener('click', checkSquare);
+
+                for (let i = 0; i < squares.length; i++) {
+                    if (squares[i] === squares[pickedColor])
+                        continue;
+                    else
+                        squares[i].style.background = bgColor;
+                }
+                restSquares = squares.length;
+            });
+
+            setLabels("you win!!!", "green");
+
+        } else {
+
+            restSquares--;
+
+            if (restSquares === 1) {
+                setLabels("you lose!!!", "red");
+                squares[pickedColor].removeEventListener('click', checkSquare);
+            }
+            event.target.style.background = bgColor;
+        }
+    }
+
+    squares.forEach(square => {
+        square.addEventListener('click', checkSquare)
+    });
 
     h1Label.textContent = colors[pickedColor];
 }
+
 
 init();
 
 btnEasy.addEventListener('click', () => {
     setGameMode(btnEasy, btnHard);
-    playedSquares = 3;
+    playedSquares = difficulty.get('easy');
+    removeSquares();
     init();
 });
 btnHard.addEventListener('click', () => {
     setGameMode(btnHard, btnEasy);
-    playedSquares = 6;
+    playedSquares = difficulty.get('hard');
+    removeSquares();
     init();
 });
+
+btnPlayAgain.addEventListener('click', init);
