@@ -8,4 +8,4 @@ Guess the color with the RGB hint
 
 ------------
 
-Made with ES6
+Made with ES6. Optimized for mobile devices
