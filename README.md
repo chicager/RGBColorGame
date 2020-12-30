@@ -5,4 +5,7 @@
 Guess the color with the RGB hint
 
 <img src="screen.png" alt="screenshot"/><br/>
+
+------------
+
 Made with ES6
